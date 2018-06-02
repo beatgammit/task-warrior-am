@@ -35,6 +35,10 @@ easy as:
 
     react-native run-android
 
+To get reloading to work, start Metro Bundler:
+
+    react-native start
+
 # License
 
 This project is open source under the terms of the MPL (see [LICENSE-MPL](LICENSE-MPL) for details).
