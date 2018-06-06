@@ -120,7 +120,7 @@ export default class NextScreen extends React.Component {
   render() {
     return (
       <FlatList
-        data={this.state.tasks.sort((a, b) => a.urgency - b.urgency)}
+        data={this.state.tasks.sort((a, b) => b.urgency - a.urgency)}
         keyExtractor={(item, i) => item.id}
         onRefresh={() => this._fetchTracks()}
         refreshing={this.state.refreshing}
