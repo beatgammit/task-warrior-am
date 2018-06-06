@@ -17,10 +17,11 @@ import rootReducer from './reducers'
 
 import Next from './containers/Next';
 import Settings from './containers/Settings';
+import AddTask from './containers/AddTask';
 
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
-const RootComponent = createBottomTabNavigator({
+const MainComponent = createBottomTabNavigator({
   Next: {
     screen: Next,
   },
@@ -30,6 +31,21 @@ const RootComponent = createBottomTabNavigator({
 }, {
   initialRouteName: 'Next',
 });
+
+const RootComponent = createStackNavigator(
+  {
+    Main: {
+      screen: MainComponent,
+    },
+    AddTaskModal: {
+      screen: AddTask,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
 
 const persistConfig = {
     key: 'root',

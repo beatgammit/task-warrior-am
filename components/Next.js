@@ -3,9 +3,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import React from 'react';
-import { Button, FlatList, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 
-import { createBottomTabNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import moment from 'moment';
 
@@ -45,12 +45,19 @@ const styles = StyleSheet.create({
   startStopButton: {
     color: '#0f0',
   },
+  addButtonContainer: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 10,
+    bottom: 10,
+  },
 });
 
 export default class NextScreen extends React.Component {
   constructor() {
     super();
-    console.log('props:', this.props);
+
     this.state = {
       tasks: [],
       refreshing: true,
@@ -59,6 +66,10 @@ export default class NextScreen extends React.Component {
   
   componentDidMount() {
     this._fetchTracks();
+  }
+
+  _addTask() {
+    this.props.navigation.navigate('AddTaskModal');
   }
 
   _fetchTracks() {
@@ -77,7 +88,7 @@ export default class NextScreen extends React.Component {
   }
 
   _markTaskDone(task) {
-    fetch('https://'+this.props.server+'/api/v2/tasks/'+task.uuid+'/', {
+    fetch('https://'+this.props.server+'/api/v2/tasks/'+task.id+'/', {
       method: 'DELETE',
       mode: 'cors',
       headers: {'Authorization': 'Token ' + this.props.apiToken},
@@ -90,7 +101,7 @@ export default class NextScreen extends React.Component {
   }
   
   _startTask(task) {
-    fetch('https://'+this.props.server+'/api/v2/tasks/'+task.uuid+'/start/', {
+    fetch('https://'+this.props.server+'/api/v2/tasks/'+task.id+'/start/', {
       method: 'POST',
       mode: 'cors',
       headers: {'Authorization': 'Token ' + this.props.apiToken},
@@ -104,7 +115,7 @@ export default class NextScreen extends React.Component {
   }
 
   _stopTask(task) {
-    fetch('https://'+this.props.server+'/api/v2/tasks/'+task.uuid+'/stop/', {
+    fetch('https://'+this.props.server+'/api/v2/tasks/'+task.id+'/stop/', {
       method: 'POST',
       mode: 'cors',
       headers: {'Authorization': 'Token ' + this.props.apiToken},
@@ -119,17 +130,22 @@ export default class NextScreen extends React.Component {
 
   render() {
     return (
-      <FlatList
-        data={this.state.tasks.sort((a, b) => b.urgency - a.urgency)}
-        keyExtractor={(item, i) => item.id}
-        onRefresh={() => this._fetchTracks()}
-        refreshing={this.state.refreshing}
-        renderItem={({item}) => <Task
-                                  startTask={this._startTask.bind(this)}
-                                  stopTask={this._stopTask.bind(this)}
-                                  markDone={this._markTaskDone.bind(this)}
-                                  val={item} />}
-      />
+      <View>
+        <FlatList
+          data={this.state.tasks.sort((a, b) => b.urgency - a.urgency)}
+          keyExtractor={(item, i) => item.id}
+          onRefresh={() => this._fetchTracks()}
+          refreshing={this.state.refreshing}
+          renderItem={({item}) => <Task
+                                    startTask={this._startTask.bind(this)}
+                                    stopTask={this._stopTask.bind(this)}
+                                    markDone={this._markTaskDone.bind(this)}
+                                    val={item} />}
+        />
+        <TouchableOpacity activeOpacity={0.5} onPress={this._addTask.bind(this)} style={styles.addButtonContainer} >
+          <Icon name="add-circle" size={50} color="#4F8EF7" />
+        </TouchableOpacity>
+      </View>
     );
   }
 }

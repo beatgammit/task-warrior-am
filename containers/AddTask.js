@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import { connect } from 'react-redux'
-import NextScreen from '../components/Next'
+import AddTask from '../components/AddTask'
 
 const mapStateToProps = state => state.settings;
 
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(NextScreen);
+)(AddTask);
