@@ -155,7 +155,7 @@ function dateDiff(start, end = Date.now()) {
   return moment.duration(end - start).humanize();
 }
 
-class Task extends React.Component {
+export class Task extends React.Component {
   constructor() {
     super();
     this.state = {expanded: false};

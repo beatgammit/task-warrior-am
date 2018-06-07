@@ -16,6 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import rootReducer from './reducers'
 
 import Next from './containers/Next';
+import Projects from './containers/Projects';
 import Settings from './containers/Settings';
 import AddTask from './containers/AddTask';
 
@@ -24,6 +25,9 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 const MainComponent = createBottomTabNavigator({
   Next: {
     screen: Next,
+  },
+  Projects: {
+    screen: Projects,
   },
   Settings: {
     screen: Settings,
