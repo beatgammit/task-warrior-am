@@ -166,12 +166,16 @@ export class Task extends React.Component {
       return (
         <View>
           <Text style={styles.taskDetails}>Urgency: {task.urgency}</Text>
+          {task.due && <Text style={styles.taskDetails}>Due: {dateDiff(Date.now(), Date.parse(task.due))}</Text>}
           <Text style={styles.taskDetails}>Age: {dateDiff(Date.parse(task.entry))}</Text>
           {Array.isArray(task.tags) && task.tags.length > 0 && (
             <Text style={styles.taskDetails}>Tags: {task.tags.join(', ')}</Text>
           )}
           {task.project && (
             <Text style={styles.taskDetails}>Project: {task.project}</Text>
+          )}
+          {Array.isArray(task.annotations) && task.annotations.length > 0 && (
+              task.annotations.map(annotation => <Text style={styles.taskDetails}>{annotations}</Text>)
           )}
         </View>
       );
